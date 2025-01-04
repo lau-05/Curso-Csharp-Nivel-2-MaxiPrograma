@@ -11,7 +11,8 @@ insert into DISCOS values ('Master of Puppets', '1986-03-03', 8, 'https://media.
 insert into DISCOS values ('Illmatic', '1994-04-19', 10, 'https://static.qobuz.com/images/covers/96/24/0886444072496_600.jpg', 5,2)
 
 --4. Actualizar al menos un disco modificando la cantidad de canciones y la fecha de lanzamiento. No te olvides del Where.
-update DISCOS set Titulo = 'Nevermind',CantidadCanciones = 13,FechaLanzamiento = '1990-09-24'  where id=5
+update DISCOS set Titulo = 'Nevermind',CantidadCanciones = 13,FechaLanzamiento = '1990-09-24'  where id=1
+update DISCOS set UrlImagenTapa = 'https://i.scdn.co/image/ab67616d0000b27392441ecd34874c2bc4f19144' where id=2
 
 --5. Borrar un disco a elección.
     --(Asi es como se hace pero no quiero borrarlo) 
@@ -28,3 +29,11 @@ join TIPOSEDICION TE on D.IdTipoEdicion = TE.Id;
 
 --8. Traer todos los discos que contengan en su nombre la letra "e".
 select * from DISCOS where Titulo like '%e%';
+
+update DISCOS set IdEstilo = 4 where id=1
+
+insert into DISCOS values ('Thriller', '1982-11-29', 9, 'https://http2.mlstatic.com/D_NQ_NP_874434-MLU72740280762_112023-O.webp', 2, 1)
+
+select * from DISCOS
+select * from ESTILOS
+select * from TIPOSEDICION
