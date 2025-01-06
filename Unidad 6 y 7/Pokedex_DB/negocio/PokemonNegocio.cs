@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using dominio;
 
-namespace Primera_Lectura_a_DB
+namespace negocio
 {
-    internal class PokemonNegocio
+    public class PokemonNegocio
     {
-        public List <Pokemon> listar()
+        public List<Pokemon> listar()
         {
-            List <Pokemon> lista = new List<Pokemon>();
+            List<Pokemon> lista = new List<Pokemon>();
             SqlConnection conexion = new SqlConnection();
             SqlCommand comando = new SqlCommand();
             SqlDataReader lector;
@@ -20,12 +21,13 @@ namespace Primera_Lectura_a_DB
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=POKEDEX_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion Tipo, D.Descripcion Debilidad from POKEMONS P, ELEMENTOS E, ELEMENTOS D where E.Id = P.IdTipo and D.Id = P.IdDebilidad";
+                comando.CommandText = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion Tipo, D.Descripcion Debilidad From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad";
                 comando.Connection = conexion;
+
                 conexion.Open();
                 lector = comando.ExecuteReader();
 
-                while (lector.Read()) 
+                while (lector.Read())
                 {
                     Pokemon aux = new Pokemon();
                     aux.Numero = lector.GetInt32(0);
@@ -36,6 +38,7 @@ namespace Primera_Lectura_a_DB
                     aux.Tipo.Descripcion = (string)lector["Tipo"];
                     aux.Debilidad = new Elemento();
                     aux.Debilidad.Descripcion = (string)lector["Debilidad"];
+
                     lista.Add(aux);
                 }
 
@@ -44,9 +47,9 @@ namespace Primera_Lectura_a_DB
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-        } 
+
+        }
     }
 }
