@@ -22,11 +22,7 @@ namespace winform_app
 
         private void frmPokemons_Load(object sender, EventArgs e)
         {
-            PokemonNegocio negocio = new PokemonNegocio();
-            listaPokemon = negocio.listar();
-            dgvPokemons.DataSource = listaPokemon;
-            dgvPokemons.Columns["UrlImagen"].Visible = false;
-            cargarImagen(listaPokemon[0].UrlImagen);
+            cargar();
         }
 
         private void dgvPokemons_SelectionChanged(object sender, EventArgs e)
@@ -34,6 +30,22 @@ namespace winform_app
             Pokemon seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
             cargarImagen(seleccionado.UrlImagen);
 
+        }
+
+        private void cargar()
+        {
+            PokemonNegocio negocio = new PokemonNegocio();
+            try
+            {
+                listaPokemon = negocio.listar();
+                dgvPokemons.DataSource = listaPokemon;
+                dgvPokemons.Columns["UrlImagen"].Visible = false;
+                cargarImagen(listaPokemon[0].UrlImagen);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void cargarImagen(string imagen)
@@ -51,6 +63,13 @@ namespace winform_app
         private void dgvPokemons_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            frmAltaPokemon alta = new frmAltaPokemon();
+            alta.ShowDialog();
+            cargar();
         }
     }
 }
