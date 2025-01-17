@@ -3,20 +3,30 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using dominio;
 using negocio;
+using System.Configuration;
 
 namespace winform_app
 {
     public partial class frmAltaPokemon : Form
     {
+        private Pokemon pokemon = null;
+        private OpenFileDialog archivo = null;
         public frmAltaPokemon()
         {
             InitializeComponent();
+        }
+        public frmAltaPokemon(Pokemon pokemon)
+        {
+            InitializeComponent();
+            this.pokemon = pokemon;
+            Text = "Modificar Pokemon";
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -26,19 +36,33 @@ namespace winform_app
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            Pokemon poke = new Pokemon();
             PokemonNegocio negocio = new PokemonNegocio();
             try
             {
-                poke.Numero = int.Parse(txtNumero.Text);
-                poke.Nombre = txtNombre.Text;
-                poke.Descripcion = txtDescripcion.Text;
-                poke.UrlImagen = txtUrlmagen.Text;
-                poke.Tipo = (Elemento)cboTipo.SelectedItem;
-                poke.Debilidad = (Elemento)cboDebilidad.SelectedItem;
+                if (pokemon == null)
+                    pokemon = new Pokemon();
+                pokemon.Numero = int.Parse(txtNumero.Text);
+                pokemon.Nombre = txtNombre.Text;
+                pokemon.Descripcion = txtDescripcion.Text;
+                pokemon.UrlImagen = txtUrlmagen.Text;
+                pokemon.Tipo = (Elemento)cboTipo.SelectedItem;
+                pokemon.Debilidad = (Elemento)cboDebilidad.SelectedItem;
+                if (pokemon.Id != 0)
+                {
+                    negocio.modificar(pokemon);
+                    MessageBox.Show("Modificado exitosamente");
+                }
+                else
+                {
+                    negocio.agregar(pokemon);
+                    MessageBox.Show("Agregado exitosamente");  
+                }
+                //guardo imagen si la levanto localmente
+                if (archivo != null && !(txtUrlmagen.Text.ToUpper().Contains("HTTP")))
+                {
+                    File.Copy(archivo.FileName, ConfigurationManager.AppSettings["images-folder"] + archivo.SafeFileName);
 
-                negocio.agregar(poke);
-                MessageBox.Show("Agregado exitosamente");
+                }
                 Close();
             }
             catch (Exception ex)
@@ -53,7 +77,21 @@ namespace winform_app
             try
             {
                 cboTipo.DataSource = elementoNegocio.listar();
+                cboTipo.ValueMember = "Id";
+                cboTipo.DisplayMember = "Descripcion";
                 cboDebilidad.DataSource = elementoNegocio.listar();
+                cboDebilidad.ValueMember = "Id";
+                cboDebilidad.DisplayMember = "Descripcion";
+                if (pokemon != null)
+                {
+                    txtNumero.Text = pokemon.Numero.ToString();
+                    txtNombre.Text = pokemon.Nombre;
+                    txtDescripcion.Text = pokemon.Descripcion;
+                    txtUrlmagen.Text = pokemon.UrlImagen;
+                    cargarImagen(pokemon.UrlImagen);
+                    cboTipo.SelectedValue = pokemon.Tipo.Id;
+                    cboDebilidad.SelectedValue = pokemon.Debilidad.Id;
+                }
             }
             catch (Exception ex)
             {
@@ -75,6 +113,19 @@ namespace winform_app
             catch (Exception ex)
             {
                 pbxPokemon.Load("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=");
+            }
+        }
+
+        private void btnAgregarImagen_Click(object sender, EventArgs e)
+        {
+            archivo = new OpenFileDialog();
+            archivo.Filter = "jpg|*.jpg|png|*.png";
+            if (archivo.ShowDialog() == DialogResult.OK)
+            {
+                txtUrlmagen.Text = archivo.FileName;
+                cargarImagen(archivo.FileName);
+                //guardo la imagen
+                //File.Copy(archivo.FileName, ConfigurationManager.AppSettings["images-folder"] + archivo.SafeFileName);
             }
         }
     }

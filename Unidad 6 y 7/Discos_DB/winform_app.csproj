@@ -1,17 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1C5B0226-704A-46A3-982D-400CCE1BBC1E}</ProjectGuid>
+    <ProjectGuid>{4062A0FC-3B4B-4BAA-96E9-987CD573259C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>winform_app</RootNamespace>
-    <AssemblyName>winform-app</AssemblyName>
+    <RootNamespace>Discos_DB</RootNamespace>
+    <AssemblyName>Discos_DB</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,7 +35,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,25 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmAltaPokemon.cs">
+    <Compile Include="frmAltaDiscos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAltaPokemon.Designer.cs">
-      <DependentUpon>frmAltaPokemon.cs</DependentUpon>
+    <Compile Include="frmAltaDiscos.Designer.cs">
+      <DependentUpon>frmAltaDiscos.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPokemons.cs">
+    <Compile Include="frmDiscos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPokemons.Designer.cs">
-      <DependentUpon>frmPokemons.cs</DependentUpon>
+    <Compile Include="frmDiscos.Designer.cs">
+      <DependentUpon>frmDiscos.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmAltaPokemon.resx">
-      <DependentUpon>frmAltaPokemon.cs</DependentUpon>
+    <EmbeddedResource Include="frmAltaDiscos.resx">
+      <DependentUpon>frmAltaDiscos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPokemons.resx">
-      <DependentUpon>frmPokemons.cs</DependentUpon>
+    <EmbeddedResource Include="frmDiscos.resx">
+      <DependentUpon>frmDiscos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -75,6 +75,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -90,12 +91,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\dominios\dominio.csproj">
-      <Project>{faedb981-499b-4477-9ec6-869c2ef70841}</Project>
+    <ProjectReference Include="dominio\dominio.csproj">
+      <Project>{0c1c7b92-b287-4c93-9adb-9e3bc707a659}</Project>
       <Name>dominio</Name>
     </ProjectReference>
-    <ProjectReference Include="..\negocio\negocio.csproj">
-      <Project>{57297708-29e3-4683-b1a8-885c9f3dfe89}</Project>
+    <ProjectReference Include="negocio\negocio.csproj">
+      <Project>{d5ea9e97-1ae7-45ae-a3b3-4ad297758258}</Project>
       <Name>negocio</Name>
     </ProjectReference>
   </ItemGroup>
